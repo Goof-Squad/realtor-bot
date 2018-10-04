@@ -1,8 +1,8 @@
-var express = require(‘express’);
+const express = require("express");
 
-var port = process.env.PORT || 3000;
-var app = express();
+const app = express();
+const port  = process.env.PORT || 3000;
 
-app.listen(port, function () {
- console.log(`Hello world!`);
+app.listen(port, () => {
+	console.log('Go to http://localhost:${port}');
 });
