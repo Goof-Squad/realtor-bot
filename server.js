@@ -1,11 +1,7 @@
 const express = require("express");
-var request = require('request');
-const https = require('https');
-const http = require('http');
 const app = express();
-var extract = require('pdf-text-extract')
 const fs = require('fs');
-const exec = require('child_process').exec;  
+const pdf = require('pdf-parse');
 var pdf_table_extractor = require("pdf-table-extractor");
 
 var server = app.listen(3000, function () {
@@ -27,4 +23,11 @@ app.get('/', function (req, res) {
     {
         console.error('Error: ' + err);
     }
+    let dataBuffer = fs.readFileSync('./menu.pdf');
+
+    pdf(dataBuffer).then(function(data) {
+        res.send(data.text.split("   ").join("\n"))
+        fs.writeFileSync("menu.txt", data.text.split("   ").join("\n"));
+        // console.log(data.text.split("   ").join("\n"));
+    });
 })
